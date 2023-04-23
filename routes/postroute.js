@@ -55,12 +55,12 @@ router.delete("/delete", async (req, res) => {
   }
 })
 
-router.patch("/edit", async (req, res) => {
+router.put("/edit", async (req, res) => {
   try {
     const post = req.body;
     const _id = req.headers["user_id"];
     console.log(_id);
-    const data = await bookModel.findByIdAndUpdate({ _id: _id } , post)
+    const data = await bookModel.findByIdAndUpdate( _id ,{ $set : post } , { new : true})
     return res.status(200).json({
       message: "Task Updated",
     })
