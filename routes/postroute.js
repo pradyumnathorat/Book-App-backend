@@ -55,4 +55,34 @@ router.delete("/delete", async (req, res) => {
   }
 })
 
+router.patch("/edit", async (req, res) => {
+  try {
+    const post = req.body;
+    const _id = req.headers["user_id"];
+    console.log(_id);
+    const data = await bookModel.findByIdAndUpdate({ _id: _id } , post)
+    return res.status(200).json({
+      message: "Task Updated",
+    })
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
+router.get('/single', async (req, res) => {
+  try {
+    const _id = req.headers["user_id"];
+    const book = await bookModel.findById({ _id: _id });
+    res.status(200).json({
+      data: book
+    })
+  } catch (err) {
+    res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
 module.exports = router;
