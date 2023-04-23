@@ -40,4 +40,19 @@ router.get('/upload', async (req, res) => {
   }
 })
 
+router.delete("/delete", async (req, res) => {
+  try {
+    const _id = req.headers["user_id"];
+    console.log(_id);
+    const data = await bookModel.findByIdAndDelete({ _id: _id })
+    return res.status(200).json({
+      message: "Task Deleted",
+    })
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
 module.exports = router;
